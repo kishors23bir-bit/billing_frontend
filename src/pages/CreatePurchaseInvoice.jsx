@@ -3,17 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './CreatePurchaseInvoice.css';
 import ItemSelectionModal from '../components/ItemSelectionModal';
 import { inventoryCatalog } from '../data/inventoryCatalog.js';
-
-// Resolve API base URL
-let API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-try {
-  const currentHost = window.location.host;
-  if (!API_BASE_URL || API_BASE_URL.includes(currentHost)) {
-    API_BASE_URL = 'http://localhost:5000';
-  }
-} catch (e) {
-  API_BASE_URL = API_BASE_URL || 'http://localhost:5000';
-}
+import API from '../config/api';
 
 const CreatePurchaseInvoice = () => {
   const navigate = useNavigate();
@@ -38,10 +28,9 @@ const CreatePurchaseInvoice = () => {
   useEffect(() => {
     fetchSuppliers();
 
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
     const fetchItems = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/items`);
+        const res = await fetch(`${API}/api/items`);
         const d = await res.json();
         setCatalogItems(d.items || []);
       } catch (err) {
@@ -66,7 +55,7 @@ const CreatePurchaseInvoice = () => {
 
   const fetchSuppliers = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/sellers`);
+      const response = await fetch(`${API}/api/sellers`);
       const data = await response.json();
       if (response.ok) {
         setSuppliers(data.sellers || []);
@@ -165,7 +154,7 @@ const CreatePurchaseInvoice = () => {
         status: 'Unpaid',
       };
 
-      const response = await fetch(`${API_BASE_URL}/api/purchase-invoices`, {
+      const response = await fetch(`${API}/api/purchase-invoices`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

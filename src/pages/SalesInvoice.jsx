@@ -3,6 +3,7 @@ import ItemSelectionModal from '../components/ItemSelectionModal';
 import './SalesInvoice.css';
 import InvoicePrint from '../components/InvoicePrint';
 import { inventoryCatalog } from '../data/inventoryCatalog.js';
+import API from '../config/api';
 
 const SalesInvoice = () => {
   // Invoice state
@@ -35,10 +36,8 @@ const SalesInvoice = () => {
   useEffect(() => {
     const generateInvoiceNumber = async () => {
       try {
-        const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-        
         // Fetch all bills to get the last invoice number
-        const response = await fetch(`${API_BASE_URL}/api/bills`);
+        const response = await fetch(`${API}/api/bills`);
         const data = await response.json();
         
         let nextNumber = 1;
@@ -75,11 +74,9 @@ const SalesInvoice = () => {
 
   // Fetch customers and items (for auto-fill)
   useEffect(() => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-
     const fetchCustomers = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/parties`);
+        const response = await fetch(`${API}/api/parties`);
         const data = await response.json();
         setCustomers(data.parties || []);
       } catch (err) {
@@ -89,7 +86,7 @@ const SalesInvoice = () => {
 
     const fetchItems = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/items`);
+        const res = await fetch(`${API}/api/items`);
         const d = await res.json();
         setItemsCatalog(d.items || []);
       } catch (err) {
@@ -270,8 +267,6 @@ const SalesInvoice = () => {
     setIsSaving(true);
 
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-
       const payload = {
         invoiceNumber,
         invoiceDate,
@@ -304,7 +299,7 @@ const SalesInvoice = () => {
         notes
       };
 
-      const res = await fetch(`${API_BASE_URL}/api/bills`, {
+      const res = await fetch(`${API}/api/bills`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

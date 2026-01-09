@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Bills.css';
+import API from '../config/api';
 
 const Bills = () => {
   const [bills, setBills] = useState([]);
@@ -10,12 +11,11 @@ const Bills = () => {
   const fetchData = async () => {
     setLoading(true);
     setError(null);
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 
     try {
       const [bRes, sRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/api/bills`),
-        fetch(`${API_BASE_URL}/api/bills/summary`)
+        fetch(`${API}/api/bills`),
+        fetch(`${API}/api/bills/summary`)
       ]);
 
       if (!bRes.ok) throw new Error(`Bills fetch failed: ${bRes.status}`);

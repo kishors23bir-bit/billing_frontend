@@ -1,8 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PurchaseInvoices.css';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+import API from '../config/api';
 
 const mockInvoices = [];
 
@@ -18,7 +17,7 @@ const PurchaseInvoices = () => {
     const fetchInvoices = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/api/purchase-invoices`);
+        const res = await fetch(`${API}/api/purchase-invoices`);
         const data = await res.json();
         if (res.ok && data.invoices) {
           setInvoices(data.invoices.map((inv) => ({

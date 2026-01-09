@@ -4,6 +4,7 @@ import EditItemModal from '../components/EditItemModal';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Home.css';
 import './Items.css';
+import API from '../config/api';
 
 const formatCurrency = (value) => {
   const amount = Number.isFinite(value) ? value : 0;
@@ -29,21 +30,8 @@ function Items() {
   const [updatingItemId, setUpdatingItemId] = useState(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
-    const [toast, setToast] = useState(null);
-    const navigate = useNavigate();
-    let API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-    try {
-      const currentHost = window.location.host; // e.g. localhost:5173
-      if (!API_BASE_URL || API_BASE_URL.includes(currentHost)) {
-        API_BASE_URL = 'http://localhost:5000';
-       
-        console.warn('Using fallback API_BASE_URL ->', API_BASE_URL);
-      }
-    } catch (e) {
-      API_BASE_URL = API_BASE_URL || 'http://localhost:5000';
-  }
-
-  console.debug('API_BASE_URL =', API_BASE_URL);
+  const [toast, setToast] = useState(null);
+  const navigate = useNavigate();
 
   const location = useLocation();
 
@@ -52,7 +40,7 @@ function Items() {
     setLoadError('');
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/items`);
+      const response = await fetch(`${API}/api/items`);
       const data = await response.json();
 
       if (!response.ok) {
@@ -67,7 +55,7 @@ function Items() {
     } finally {
       setIsLoading(false);
     }
-  }, [API_BASE_URL]);
+  }, []);
 
   // Open modal editor for an item
   const handleEditItem = (item) => {
@@ -80,7 +68,7 @@ function Items() {
     const id = editingItem.itemId ?? editingItem.id ?? editingItem._id;
     setUpdatingItemId(id);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/items/${id}`, {
+      const res = await fetch(`${API}/api/items/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedFields),

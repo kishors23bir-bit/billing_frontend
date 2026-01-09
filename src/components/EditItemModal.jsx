@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './EditItemModal.css';
+import API from '../config/api';
 
 const DEFAULT_CATEGORIES = [
   'General',
@@ -31,8 +32,7 @@ export default function EditItemModal({ open, onClose, item, onSave }) {
   const [fetchedItems, setFetchedItems] = useState([]);
 
   useEffect(() => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-    fetch(`${API_BASE_URL}/api/items`)
+    fetch(`${API}/api/items`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {

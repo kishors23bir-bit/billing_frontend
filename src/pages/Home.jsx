@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import API from '../config/api';
 
 function Home() {
   const transactions = [
@@ -19,11 +20,9 @@ function Home() {
   const [toPay, setToPay] = React.useState(0);
 
   React.useEffect(() => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-
     const fetchPurchaseSummary = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/purchase-invoices/summary`);
+        const res = await fetch(`${API}/api/purchase-invoices/summary`);
         if (!res.ok) return;
         const d = await res.json();
         setToPay(Number(d.unpaidTotal || 0));

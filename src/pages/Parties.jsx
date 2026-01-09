@@ -4,20 +4,10 @@ import portalIconUrl from '../image/icons/home.svg';
 import settingsIcon from '../image/icons/settings.svg';
 import './Parties.css';
 import PartyDrawer from '../components/PartyDrawer';
+import API from '../config/api';
 
 /* parties loaded from API */
 const partiesList = [];
-
-// Resolve API base URL like other pages (prefer Vite env var)
-let API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-try {
-  const currentHost = window.location.host;
-  if (!API_BASE_URL || API_BASE_URL.includes(currentHost)) {
-    API_BASE_URL = 'http://localhost:5000';
-  }
-} catch (e) {
-  API_BASE_URL = API_BASE_URL || 'http://localhost:5000';
-}
 
 /* Summary cards values are computed from loaded parties (see inside component) */
 
@@ -61,7 +51,7 @@ export default function Parties() {
       setIsLoading(true);
       setLoadError('');
       try {
-        const res = await fetch(`${API_BASE_URL}/api/parties`);
+        const res = await fetch(`${API}/api/parties`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Failed to load parties');
         if (mounted) setParties(Array.isArray(data.parties) ? data.parties : []);
@@ -103,7 +93,7 @@ export default function Parties() {
     setIsLoading(true);
     setLoadError('');
     try {
-      const res = await fetch(`${API_BASE_URL}/api/parties`);
+      const res = await fetch(`${API}/api/parties`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to load parties');
       setParties(Array.isArray(data.parties) ? data.parties : []);

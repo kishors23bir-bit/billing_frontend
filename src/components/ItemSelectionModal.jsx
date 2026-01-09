@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import './ItemSelectionModal.css';
+import API from '../config/api';
 
 const ItemSelectionModal = ({ isOpen, onClose, onAddItems, existingItems = [] }) => {
   const [allItems, setAllItems] = useState([]);
@@ -19,7 +20,7 @@ const ItemSelectionModal = ({ isOpen, onClose, onAddItems, existingItems = [] })
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch('http://localhost:5000/api/items');
+        const response = await fetch(`${API}/api/items`);
         if (!response.ok) {
           throw new Error('Failed to fetch items');
         }

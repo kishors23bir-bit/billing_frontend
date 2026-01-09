@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
 import './PartyDrawer.css';
+import API from '../config/api';
 
 const historySample = [
   { invoice: 'INV-1001', date: '12 Dec 2025', items: 4, amount: '₹ 12,500' },
   { invoice: 'INV-1002', date: '09 Dec 2025', items: 2, amount: '₹ 5,200' },
   { invoice: 'INV-1003', date: '01 Dec 2025', items: 6, amount: '₹ 22,000' },
 ];
-
-// Resolve API base URL
-let API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-try {
-  const currentHost = window.location.host;
-  if (!API_BASE_URL || API_BASE_URL.includes(currentHost)) {
-    API_BASE_URL = 'http://localhost:5000';
-  }
-} catch (e) {
-  API_BASE_URL = API_BASE_URL || 'http://localhost:5000';
-}
 
 export default function PartyDrawer({ mode, party, onClose, onSave }) {
   const isHistory = mode === 'history';
@@ -58,8 +48,8 @@ export default function PartyDrawer({ mode, party, onClose, onSave }) {
 
     try {
       const url = isEdit 
-        ? `${API_BASE_URL}/api/parties/${party.partyId}`
-        : `${API_BASE_URL}/api/parties`;
+        ? `${API}/api/parties/${party.partyId}`
+        : `${API}/api/parties`;
       
       const method = isEdit ? 'PUT' : 'POST';
 

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './CustomerHistoryDrawer.css';
+import API from '../config/api';
 
 export default function CustomerHistoryDrawer({ isOpen, customerData, onClose }){
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL && !import.meta.env.VITE_API_BASE_URL.includes(window.location.host)
-    ? import.meta.env.VITE_API_BASE_URL
-    : 'http://localhost:5000';
 
   useEffect(()=>{
     if (!isOpen) return;
@@ -20,7 +17,7 @@ export default function CustomerHistoryDrawer({ isOpen, customerData, onClose })
         const q = new URLSearchParams();
         if (fromDate) q.set('from', fromDate);
         if (toDate) q.set('to', toDate);
-        const res = await fetch(`${API_BASE_URL}/api/parties/${id}/invoices?${q.toString()}`);
+        const res = await fetch(`${API}/api/parties/${id}/invoices?${q.toString()}`);
         const contentType = res.headers.get('content-type')||'';
         const data = contentType.includes('application/json') ? await res.json() : { __rawText: await res.text() };
         if (!res.ok) throw new Error((data && data.message) || data.__rawText || res.statusText);

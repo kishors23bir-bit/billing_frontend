@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { inventoryCatalog } from '../data/inventoryCatalog';
 import './AddItem.css';
+import API from '../config/api';
 
 const UNIT_OPTIONS = ['PCS', 'MTR', 'KGS', 'BOX', 'LTR', 'SET'];
 const DEFAULT_TAX = 18;
@@ -61,8 +62,7 @@ function AddItem() {
 
   // Fetch items from API to get latest categories
   useEffect(() => {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-    fetch(`${API_BASE_URL}/api/items`)
+    fetch(`${API}/api/items`)
       .then(res => res.json())
       .then(data => {
         if (data.items) {
@@ -164,10 +164,9 @@ function AddItem() {
     };
 
     // Attempt to save via API and navigate only on success
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
     setIsSaving(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/items`, {
+      const res = await fetch(`${API}/api/items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         // send flat payload (server accepts both flat and { item: ... })
