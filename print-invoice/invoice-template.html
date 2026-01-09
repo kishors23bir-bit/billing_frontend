@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tax Invoice - SEVVEL GARMENTS</title>
+  <style>
+    /* Page and base */
+    @page { size: A4; margin: 10mm; }
+    html,body{height:100%;margin:0;padding:0;background:#fff;font-family: Arial, Helvetica, sans-serif;color:#111}
+
+    .page{width:210mm;min-height:297mm;padding:10mm;margin:0 auto;box-sizing:border-box;background:#fff}
+
+    /* Header */
+    .header{display:flex;align-items:flex-start;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:8px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo svg{width:56px;height:56px}
+    .company{line-height:1}
+    .company .name{font-weight:800;color:#0b8a3d;font-size:20px}
+    .company .addr{font-size:11px;color:#222;margin-top:4px}
+    .company .tax{font-size:11px;margin-top:6px;font-weight:600}
+
+    .invoice-meta{width:260px;border:1px solid #000;padding:8px;font-size:12px}
+    .invoice-meta table{width:100%;font-size:12px;border-collapse:collapse}
+    .invoice-meta td{padding:4px 6px}
+    .meta-label{font-weight:700}
+    .meta-value{text-align:right}
+
+    /* Title */
+    .title{width:100%;text-align:center;margin:12px 0;font-weight:800;letter-spacing:2px;font-size:16px}
+
+    /* Party details */
+    .parties{display:flex;gap:14px;margin:8px 0}
+    .box{flex:1;border:1px solid #ddd;padding:8px;background:#fafafa;font-size:12px}
+    .box h4{margin:0 0 6px 0;font-size:12px;border-bottom:1px solid #000;padding-bottom:4px}
+
+    /* Items table */
+    .items{margin-top:8px;border:1px solid #000}
+    .items table{width:100%;border-collapse:collapse;font-size:12px}
+    .items th, .items td{border:1px solid #ddd;padding:6px;text-align:left}
+    .items th{background:#f3f3f3;font-weight:700;text-align:center}
+    .items td.number{text-align:right}
+    .items td.sno{text-align:center;width:40px}
+    .items td.qty{text-align:center;width:60px}
+    .items td.rate{width:90px;text-align:right}
+    .items td.amount{width:110px;text-align:right;font-weight:700}
+
+    /* Totals and summary */
+    .totals{display:flex;justify-content:flex-end;margin-top:8px}
+    .totals .box{width:320px;border:1px solid #ddd;padding:8px}
+    .totals table{width:100%;font-size:12px}
+    .totals td{padding:6px}
+    .totals td.label{text-align:left}
+    .totals td.value{text-align:right;font-weight:700}
+
+    .words{margin-top:8px;font-size:12px;font-weight:600}
+
+    .bank-terms{display:flex;justify-content:space-between;margin-top:12px;gap:12px}
+    .bank{flex:1;border:1px solid #ddd;padding:8px;font-size:12px}
+    .terms{flex:1;border:1px solid #ddd;padding:8px;font-size:12px}
+
+    .signature{display:flex;justify-content:flex-end;margin-top:22px}
+    .signature .sig-box{width:220px;text-align:center}
+    .sig-line{height:1px;background:#000;margin-bottom:6px}
+
+    .footer{margin-top:20px;text-align:center;font-size:11px;font-weight:700}
+
+    /* Ensure single page: avoid page breaks inside main containers */
+    .page, .items table, .bank, .terms {page-break-inside: avoid}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="logo">
+        <!-- Simple SVG logo placeholder -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="logo">
+          <circle cx="20" cy="20" r="18" fill="#0b8a3d" />
+          <text x="50" y="55" font-family="Arial" font-size="22" fill="#0b8a3d" font-weight="700">SG</text>
+        </svg>
+        <div class="company">
+          <div class="name">%%COMPANY_NAME%%</div>
+          <div class="addr">%%COMPANY_ADDRESS%%</div>
+          <div class="addr">Mobile: %%COMPANY_MOBILE%%</div>
+          <div class="tax">GSTIN: %%COMPANY_GST%% &nbsp;&nbsp; PAN: %%COMPANY_PAN%%</div>
+        </div>
+      </div>
+
+      <div class="invoice-meta">
+        <table>
+          <tr><td class="meta-label">Invoice No.</td><td class="meta-value">%%INVOICE_NUMBER%%</td></tr>
+          <tr><td class="meta-label">Invoice Date</td><td class="meta-value">%%INVOICE_DATE%%</td></tr>
+          <tr><td class="meta-label">Due Date</td><td class="meta-value">%%DUE_DATE%%</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="title">TAX INVOICE</div>
+
+    <div class="parties">
+      <div class="box">
+        <h4>BILL TO</h4>
+        <div style="font-weight:700">J U GARMENTS</div>
+        <div>NO.6, MURUGANATHAPURAM EAST OPP, VIKAS VIDHYALAYA SCHOOL, M.S NAGAR TIRUPUR</div>
+        <div>Tiruppur, Coimbatore, Tamil Nadu - 641607</div>
+        <div>GSTIN: 33AENPA9557M1Z0</div>
+      </div>
+      <div class="box">
+        <h4>SHIP TO</h4>
+        <div style="font-weight:700">J U GARMENTS</div>
+        <div>NO.6, MURUGANATHAPURAM EAST OPP, VIKAS VIDHYALAYA SCHOOL, M.S NAGAR TIRUPUR</div>
+        <div>Tiruppur, Coimbatore, Tamil Nadu - 641607</div>
+      </div>
+    </div>
+
+    <div class="items">
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Item Description</th>
+            <th>Qty (PCS)</th>
+            <th>Rate (₹)</th>
+            <th>Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ITEMS_PLACEHOLDER -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="totals">
+      <div class="box">
+        <table>
+          <tr><td class="label">Subtotal</td><td class="value">₹ 6,350.00</td></tr>
+          <tr><td class="label">CGST (9%)</td><td class="value">₹ 571.50</td></tr>
+          <tr><td class="label">SGST (9%)</td><td class="value">₹ 571.50</td></tr>
+          <tr style="border-top:1px solid #ddd"><td class="label">Total Amount</td><td class="value">₹ 7,493.00</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="words">Amount (in words): <strong>%%AMOUNT_IN_WORDS%%</strong></div>
+
+    <div class="bank-terms">
+      <div class="bank">
+        <strong>BANK DETAILS</strong>
+        <div>Account Holder: Sevvel Garments</div>
+        <div>Bank: Example Bank</div>
+        <div>Account No: 1234567890</div>
+        <div>IFSC: EXAM0000123</div>
+        <div>Branch: Tiruppur</div>
+      </div>
+
+      <div class="terms">
+        <strong>TERMS &amp; CONDITIONS</strong>
+        <ol style="padding-left:18px;margin-top:6px">
+          <li>Goods once sold will not be taken back or exchanged</li>
+          <li>All disputes are subject to Tiruppur jurisdiction only</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="signature">
+      <div class="sig-box">
+        <div class="sig-line"></div>
+        <div>AUTHORISED SIGNATORY FOR SEVVEL GARMENTS</div>
+      </div>
+    </div>
+
+    <div class="footer">TAX INVOICE – ORIGINAL FOR RECIPIENT</div>
+
+  </div>
+</body>
+</html>
